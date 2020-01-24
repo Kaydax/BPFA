@@ -22,13 +22,14 @@
     <ProjectGuid>{DD4C822F-844F-40BF-8113-129B04EDE199}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>PianoFromAbove</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -75,25 +76,25 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(DXSDK_DIR)Include;C:\Users\GamingMidi\Documents\boost_1_55_0;C:\Users\GamingMidi\Documents\protobuf-2.5.0\vsprojects\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;C:\Users\GamingMidi\Documents\protobuf-2.5.0\vsprojects\x64\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;C:\Users\Kaydax\Documents\Stuff\protobuff\boost_1_55_0;C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x64;C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\x64\Debug;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>PFA-1.1.0-x86_64</TargetName>
+    <TargetName>BPFA-PR2-x86_64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(DXSDK_DIR)Include;C:\Users\GamingMidi\Documents\boost_1_55_0;C:\Users\GamingMidi\Documents\protobuf-2.5.0\vsprojects\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;C:\Users\GamingMidi\Documents\protobuf-2.5.0\vsprojects\Release\Release;$(LibraryPath)</LibraryPath>
-    <TargetName>PFA-1.1.0-x86</TargetName>
+    <IncludePath>$(DXSDK_DIR)Include;C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\x86\Release;C:\Users\Kaydax\Documents\Stuff\omnimidi\DeveloperContent\LIB32;$(LibraryPath)</LibraryPath>
+    <TargetName>BPFA-PR2-x86</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(DXSDK_DIR)Include;C:\Users\GamingMidi\Documents\boost_1_55_0;C:\Users\GamingMidi\Documents\protobuf-2.5.0\vsprojects\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;C:\Users\GamingMidi\Documents\protobuf-2.5.0\vsprojects\x64\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include;C:\Users\Kaydax\Documents\Stuff\discord-rpc\win64-dynamic\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x64;C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\x64\Release;C:\Users\Kaydax\Documents\Stuff\omnimidi\DeveloperContent\LIB64;C:\Users\Kaydax\Documents\Stuff\discord-rpc\win64-dynamic\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>PFA-1.1.0-x86_64</TargetName>
+    <TargetName>BPFA-PR3-Dev-x86_64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -120,6 +121,9 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;WINVER=0x0501;_WIN32_WINNT=0x0501;TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,6 +132,8 @@
       <AdditionalDependencies>d3d9.lib;d3dx9d.lib;WinMM.lib;Comctl32.lib;UxTheme.lib;Advapi32.lib;Msimg32.lib;libprotobuf-lite.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>
       </Version>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -175,7 +181,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalManifestDependencies>"type='Win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'";%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;Comctl32.lib;WinMM.lib;UxTheme.lib;Advapi32.lib;Msimg32.lib;libprotobuf-lite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;Comctl32.lib;WinMM.lib;UxTheme.lib;Advapi32.lib;Msimg32.lib;libprotobuf-lite.lib;OmniMIDI_Win64.lib;discord-rpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Version>
       </Version>
     </Link>
@@ -187,10 +193,10 @@
     <ClInclude Include="ConfigProcs.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="KDMAPI.h" />
     <ClInclude Include="MainProcs.h" />
     <ClInclude Include="MIDI.h" />
     <ClInclude Include="Misc.h" />
+    <ClInclude Include="OmniMidi\OmniMIDI.h" />
     <ClInclude Include="ProtoBuf\MetaData.pb.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />
@@ -201,7 +207,8 @@
     <ResourceCompile Include="PianoFromAbove.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\PianoFromAbove-frame-dumper\PianoFromAbove\FramePipe.cpp" />
+    <ClCompile Include="discord.cpp" />
+    <ClCompile Include="FramePipe.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="ConfigProcs.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -231,6 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\vignette-transparent-2.png" />
+    <Image Include="Images\bpfa_icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

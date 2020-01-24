@@ -37,6 +37,9 @@
     <Filter Include="Header Files\ProtoBuf">
       <UniqueIdentifier>{4a261048-6f91-405a-955c-9ed2ed8a6cb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\OmniMidi">
+      <UniqueIdentifier>{049e0d70-f32d-41aa-ba6d-840fb852dfd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -60,9 +63,6 @@
     <ClInclude Include="MainProcs.h">
       <Filter>Header Files\Window</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files\Window</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
@@ -78,11 +78,14 @@
     <ClInclude Include="..\..\PianoFromAbove-frame-dumper\PianoFromAbove\FramePipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KDMAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\PianoFromAbove-2894523c0b95844f1fddb32bb22baa2be3ec23d6\PianoFromAbove\robin_hood.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OmniMidi\OmniMIDI.h">
+      <Filter>Header Files\OmniMidi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +133,10 @@
     <ClCompile Include="ProtoBuf\MetaData.pb.cc">
       <Filter>Source Files\ProtoBuf</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\PianoFromAbove-frame-dumper\PianoFromAbove\FramePipe.cpp">
+    <ClCompile Include="FramePipe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -156,6 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\vignette-transparent-2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\bpfa_icon.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

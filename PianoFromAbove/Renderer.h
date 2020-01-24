@@ -64,7 +64,7 @@ public:
 		const static DWORD FVF = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
 	};
 
-	static const int MaxTriangles = 200;
+	static const int MaxTriangles = 1800;
 	static const int VertexBufferSize = sizeof(SCREEN_VERTEX) * 3 * MaxTriangles;
 
 	D3D9Renderer() : m_pD3D(NULL), m_pTextSprite(NULL),
