@@ -12,9 +12,10 @@
 #include <Windows.h>
 #include <map>
 #include <string>
+#include <functional>
 using namespace std;
 
-#include "ProtoBuf\MetaData.pb.h"
+//#include "ProtoBuf\MetaData.pb.h"
 #include "Renderer.h"
 #include "MIDI.h"
 #include "Misc.h"
@@ -188,6 +189,7 @@ private:
 
     // Logic
     void UpdateState( int iPos );
+    void playMidiEvent(bool m_bPaused, int m_iStartPos, int iEventCount, vector<MIDIChannelEvent*> m_vEvents, long long m_llStartTime, MIDIOutDevice m_OutDevice);
     void JumpTo( long long llStartTime, bool bUpdateGUI = true);
     void PlaySkippedEvents( eventvec_t::const_iterator itOldProgramChange );
     void AdvanceIterators( long long llTime, bool bIsJump );
@@ -239,7 +241,6 @@ private:
     int m_iStartTick; // Tick that corresponds with m_llStartTime. Used to help with beat and metronome detection
     vector< int > m_vState;  // The notes that are on at time m_llStartTime.
     int m_pNoteState[256]; // The last note that was turned on
-    robin_hood::unordered_map<MIDIChannelEvent*, int, CustomHashFunc, CustomKeyEqualFunc> state_map;
     double m_dSpeed; // Speed multiplier
     bool m_bPaused; // Paused state
     Timer m_Timer; // Frame timers

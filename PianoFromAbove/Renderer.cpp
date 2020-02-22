@@ -62,14 +62,14 @@ HRESULT D3D9Renderer::Init(HWND hWnd, bool bLimitFPS)
 	ZeroMemory(&m_d3dPP, sizeof(D3DPRESENT_PARAMETERS));
 	m_d3dPP.Windowed = TRUE;
 	m_d3dPP.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	m_d3dPP.BackBufferFormat = D3DFMT_UNKNOWN;
+	m_d3dPP.BackBufferFormat = D3DFMT_A8R8G8B8;
 	m_d3dPP.BackBufferWidth = 0;
 	m_d3dPP.BackBufferHeight = 0;
 	m_d3dPP.PresentationInterval = (bLimitFPS ? D3DPRESENT_INTERVAL_ONE : D3DPRESENT_INTERVAL_IMMEDIATE);
 
 	// Create the D3DDevice
 	if (FAILED(hr = m_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, //D3DDEVTYPE_REF
-		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+		D3DCREATE_HARDWARE_VERTEXPROCESSING,
 		&m_d3dPP, &m_pd3dDevice)))
 		return hr;
 
@@ -269,12 +269,11 @@ HRESULT D3D9Renderer::DrawRect(float x, float y, float cx, float cy,
 
 		SCREEN_VERTEX vertices[6] =
 		{
-			x,  y,            0.5, 1.0, c1,
-			x + cx, y,        0.5, 1.0, c2,
-			x + cx, y + cy,   0.5, 0.0, c3,
-			x,  y,            0.5, 1.0, c1,
-			x + cx, y + cy,   0.5, 1.0, c3,
-			x,  y + cy,       0.5, 1.0, c4
+      x,  y,            0.5f, 1.0f, c1,
+      x + cx, y + cy,   0.5f, 1.0f, c3,
+      x,  y,            0.5f, 1.0f, c1,
+      x + cx, y + cy,   0.5f, 1.0f, c3,
+      x,  y + cy,       0.5f, 1.0f, c4
 		};
 
 		return Blit(vertices, 2);

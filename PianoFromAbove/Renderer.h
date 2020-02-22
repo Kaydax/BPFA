@@ -53,18 +53,18 @@ protected:
 	bool m_bLimitFPS;
 };
 
+struct SCREEN_VERTEX
+{
+  float x, y, z, h;
+  D3DCOLOR color;
+
+  const static DWORD FVF = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
+};
+
 class D3D9Renderer : public Renderer
 {
 public:
-	struct SCREEN_VERTEX
-	{
-		float x, y, z, h;
-		D3DCOLOR color;
-
-		const static DWORD FVF = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
-	};
-
-	static const int MaxTriangles = 1800;
+	static const int MaxTriangles = 200;
 	static const int VertexBufferSize = sizeof(SCREEN_VERTEX) * 3 * MaxTriangles;
 
 	D3D9Renderer() : m_pD3D(NULL), m_pTextSprite(NULL),

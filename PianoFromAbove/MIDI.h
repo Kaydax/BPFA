@@ -12,9 +12,14 @@
 #include <Windows.h>
 #include <vector>
 #include <string>
+#include <map>
+#include <thread>
+#include <ppl.h>
+#include <mutex>
 using namespace std;
 
 #include "Misc.h"
+#include "robin_hood.h"
 
 //Classes defined in this file
 class MIDI;
@@ -32,6 +37,10 @@ class MIDIOutDevice;
 //
 // MIDI File Classes
 //
+
+extern robin_hood::unordered_map<int, std::pair<std::vector<MIDIEvent*>::iterator, std::vector<MIDIEvent*>>> midi_map;
+extern std::vector<int> midi_map_times;
+extern size_t midi_map_times_pos;
 
 class MIDIPos
 {
@@ -195,7 +204,8 @@ public:
     int GetDT() const { return m_iDT; }
     int GetAbsT() const { return m_iAbsT; }
     long long GetAbsMicroSec() const { return m_llAbsMicroSec; }
-    void SetAbsMicroSec( long long llAbsMicroSec ) { m_llAbsMicroSec = llAbsMicroSec; }
+    float GetAbsMicroSecFloat() const { return m_fAbsMicroSec; }
+    void SetAbsMicroSec(long long llAbsMicroSec) { m_llAbsMicroSec = llAbsMicroSec; m_fAbsMicroSec = static_cast<float>(llAbsMicroSec); }
 
 protected:
     EventType m_eEventType;
@@ -204,6 +214,7 @@ protected:
     int m_iDT;
     int m_iAbsT;
     long long m_llAbsMicroSec;
+    float m_fAbsMicroSec;
 };
 
 //Channel Event: notes and whatnot
@@ -226,6 +237,9 @@ public:
 
     void SetSister( MIDIChannelEvent *pSister ) { m_pSister = pSister; pSister->m_pSister = this; }
     void SetSimultaneous( int iSimultaneous ) { m_iSimultaneous = iSimultaneous; }
+
+    // too lazy to write accessor
+    int sister_idx = -1;
 
 private:
     ChannelEventType m_eChannelEventType;

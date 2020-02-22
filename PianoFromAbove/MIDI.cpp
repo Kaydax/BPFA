@@ -8,8 +8,8 @@
 *
 *************************************************************************************************/
 #include "MIDI.h"
-#include <fstream>
 #include "robin_hood.h"
+#include <fstream>
 
 robin_hood::unordered_map<int, std::pair<std::vector<MIDIEvent*>::iterator, std::vector<MIDIEvent*>>> midi_map;
 std::vector<int> midi_map_times;
@@ -72,7 +72,7 @@ int MIDIPos::GetNextEvent(int iMicroSecs, MIDIEvent** pOutEvent)
     }
   }
 
-  if(midi_map_times_pos != midi_map_times.size())
+  if(midi_map_times_pos != midi_map_times.size() - 1)
   {
     auto& pair = midi_map[midi_map_times[midi_map_times_pos]];
     pMinEvent = *pair.first;
@@ -294,6 +294,9 @@ void MIDI::clear(void)
     delete* it;
   m_vTracks.clear();
   m_Info.clear();
+  midi_map.clear();
+  midi_map_times.clear();
+  midi_map_times_pos = 0;
 }
 
 int MIDI::ParseMIDI(const unsigned char* pcData, int iMaxSize)
@@ -432,7 +435,7 @@ void MIDI::PostProcess(vector< MIDIEvent* >* vEvents)
       if(pChannelEvent->GetSister())
       {
         if(pChannelEvent->GetChannelEventType() == MIDIChannelEvent::NoteOn &&
-          pChannelEvent->GetParam2() > 0)
+           pChannelEvent->GetParam2() > 0)
         {
           if(llFirstNote < 0)
             llFirstNote = llTime;
@@ -460,13 +463,19 @@ void MIDI::PostProcess(vector< MIDIEvent* >* vEvents)
 
   m_Info.llTotalMicroSecs = llTime;
   m_Info.llFirstNote = max(0LL, llFirstNote);
+
+  midi_map.clear();
+  midi_map_times.clear();
+  midi_map_times_pos = 0;
 }
 
 void MIDI::ConnectNotes()
 {
-  const int StackSize = 10;
+  //const int StackSize = 10;
   int pSize[16][256];
-  MIDIChannelEvent* pStacks[16][256][StackSize];
+  //MIDIChannelEvent* pStacks[16][256][StackSize];
+  const auto track_count = m_vTracks.size();
+  MIDIChannelEvent** pStacks = new MIDIChannelEvent * [16 * 128 * track_count * 16];
 
   for(vector< MIDITrack* >::iterator itTrack = m_vTracks.begin(); itTrack != m_vTracks.end(); ++itTrack)
   {
@@ -485,7 +494,7 @@ void MIDI::ConnectNotes()
         if(eEventType == MIDIChannelEvent::NoteOn && iVelocity > 0)
         {
           int& iSize = pSize[iChannel][iNote];
-          if(iSize < StackSize) pStacks[iChannel][iNote][iSize] = pEvent;
+          if(iSize < track_count) pStacks[(((iSize * track_count) + iChannel) * 16) + iNote] = pEvent;
           iSize++;
         }
         else if(eEventType == MIDIChannelEvent::NoteOff || eEventType == MIDIChannelEvent::NoteOn)
@@ -493,30 +502,15 @@ void MIDI::ConnectNotes()
           int& iSize = pSize[iChannel][iNote];
           if(iSize > 0)
           {
-            if(iSize <= StackSize) pStacks[iChannel][iNote][iSize - 1]->SetSister(pEvent);
-            else // Should never get here
-            {
-              midi_map_times.clear();
-              midi_map_times_pos = 0;
-              int j = i - 1;
-              while(j >= 0 && !pEvent->GetSister())
-              {
-                if(vEvents[j]->GetEventType() == MIDIEvent::ChannelEvent)
-                {
-                  MIDIChannelEvent* pSister = reinterpret_cast<MIDIChannelEvent*>(vEvents[j]);
-                  if(!pSister->GetSister() &&
-                    pSister->GetChannelEventType() == MIDIChannelEvent::NoteOn &&
-                    pSister->GetParam1() == iNote && pSister->GetParam2() > 0)
-                    pEvent->SetSister(pSister);
-                }
-                j--;
-              }
-            }
+            if(iSize <= track_count) pStacks[((((iSize - 1) * track_count) + iChannel) * 16) + iNote]->SetSister(pEvent);
+            if(iSize <= track_count) pStacks[(((((size_t)iSize - 1) * track_count) + iChannel) * 16) + iNote]->SetSister(pEvent);
             iSize--;
           }
         }
       }
   }
+
+  delete[] pStacks;
 }
 
 
@@ -583,7 +577,9 @@ int MIDITrack::ParseEvents(const unsigned char* pcData, int iMaxSize, int iTrack
   // Until we've parsed all the data, the last parse failed, or the event signals the end of track
   while(iMaxSize - iTotal > 0 && iCount > 0 &&
     (pEvent->GetEventType() != MIDIEvent::MetaEvent ||
-      reinterpret_cast<MIDIMetaEvent*>(pEvent)->GetMetaEventType() != MIDIMetaEvent::EndOfTrack));
+        reinterpret_cast<MIDIMetaEvent*>(pEvent)->GetMetaEventType() != MIDIMetaEvent::EndOfTrack));
+
+  std::sort(midi_map_times.begin(), midi_map_times.end());
 
   return iTotal;
 }
@@ -599,72 +595,72 @@ void MIDITrack::MIDITrackInfo::AddEventInfo(const MIDIEvent& mEvent)
 
   switch(mEvent.GetEventType())
   {
-  case MIDIEvent::MetaEvent:
-  {
-    const MIDIMetaEvent& mMetaEvent = reinterpret_cast<const MIDIMetaEvent&>(mEvent);
-    MIDIMetaEvent::MetaEventType eMetaEventType = mMetaEvent.GetMetaEventType();
-    switch(eMetaEventType)
+    case MIDIEvent::MetaEvent:
     {
-      //SequenceName
-    case MIDIMetaEvent::SequenceName:
-      this->sSequenceName.assign(reinterpret_cast<char*>(mMetaEvent.GetData()), mMetaEvent.GetDataLen());
-      break;
-      //SequenceNumber
-    case MIDIMetaEvent::SequenceNumber:
-      if(mMetaEvent.GetDataLen() == 2)
-        MIDI::Parse16Bit(mMetaEvent.GetData(), 2, &this->iSequenceNumber);
-      break;
-    }
-    break;
-  }
-  case MIDIEvent::ChannelEvent:
-  {
-    const MIDIChannelEvent& mChannelEvent = reinterpret_cast<const MIDIChannelEvent&>(mEvent);
-    MIDIChannelEvent::ChannelEventType eChannelEventType = mChannelEvent.GetChannelEventType();
-    int iChannel = mChannelEvent.GetChannel();
-    int iParam1 = mChannelEvent.GetParam1();
-    int iParam2 = mChannelEvent.GetParam2();
-
-    switch(eChannelEventType)
-    {
-    case MIDIChannelEvent::NoteOn:
-      if(iParam2 > 0)
+      const MIDIMetaEvent& mMetaEvent = reinterpret_cast<const MIDIMetaEvent&>(mEvent);
+      MIDIMetaEvent::MetaEventType eMetaEventType = mMetaEvent.GetMetaEventType();
+      switch(eMetaEventType)
       {
-        //MinNote and MaxNote
-        if(!this->iNoteCount)
-        {
-          this->iMinNote = this->iMaxNote = iParam1;
-          this->iMaxVolume = iParam2;
-        }
-        else
-        {
-          this->iMinNote = min(iParam1, this->iMinNote);
-          this->iMaxNote = max(iParam1, this->iMaxNote);
-          this->iMaxVolume = max(iParam2, this->iMaxVolume);
-        }
-        //NoteCount
-        this->iNoteCount++;
-        this->iVolumeSum += iParam2;
-
-        //Channel info
-        if(!this->aNoteCount[iChannel])
-          this->iNumChannels++;
-        this->aNoteCount[iChannel]++;
+        //SequenceName
+        case MIDIMetaEvent::SequenceName:
+          this->sSequenceName.assign(reinterpret_cast<char*>(mMetaEvent.GetData()), mMetaEvent.GetDataLen());
+          break;
+          //SequenceNumber
+        case MIDIMetaEvent::SequenceNumber:
+          if(mMetaEvent.GetDataLen() == 2)
+            MIDI::Parse16Bit(mMetaEvent.GetData(), 2, &this->iSequenceNumber);
+          break;
       }
       break;
-      // Should we break it down further?
-    /*case MIDIChannelEvent::ProgramChange:
-      if(this->aProgram[iChannel] != iParam1)
-      {
-        if(this->aNoteCount[iChannel] > 0)
-          this->aProgram[iChannel] = 256; // Various
-        else
-          this->aProgram[iChannel] = iParam1;
-      }
-      break;*/
     }
-    break;
-  }
+    case MIDIEvent::ChannelEvent:
+    {
+      const MIDIChannelEvent& mChannelEvent = reinterpret_cast<const MIDIChannelEvent&>(mEvent);
+      MIDIChannelEvent::ChannelEventType eChannelEventType = mChannelEvent.GetChannelEventType();
+      int iChannel = mChannelEvent.GetChannel();
+      int iParam1 = mChannelEvent.GetParam1();
+      int iParam2 = mChannelEvent.GetParam2();
+
+      switch(eChannelEventType)
+      {
+        case MIDIChannelEvent::NoteOn:
+          if(iParam2 > 0)
+          {
+            //MinNote and MaxNote
+            if(!this->iNoteCount)
+            {
+              this->iMinNote = this->iMaxNote = iParam1;
+              this->iMaxVolume = iParam2;
+            }
+            else
+            {
+              this->iMinNote = min(iParam1, this->iMinNote);
+              this->iMaxNote = max(iParam1, this->iMaxNote);
+              this->iMaxVolume = max(iParam2, this->iMaxVolume);
+            }
+            //NoteCount
+            this->iNoteCount++;
+            this->iVolumeSum += iParam2;
+
+            //Channel info
+            if(!this->aNoteCount[iChannel])
+              this->iNumChannels++;
+            this->aNoteCount[iChannel]++;
+          }
+          break;
+          // Should we break it down further?
+        case MIDIChannelEvent::ProgramChange:
+          if(this->aProgram[iChannel] != iParam1)
+          {
+            if(this->aNoteCount[iChannel] > 0)
+              this->aProgram[iChannel] = 256; // Various
+            else
+              this->aProgram[iChannel] = iParam1;
+          }
+          break;
+      }
+      break;
+    }
   }
 }
 
@@ -716,6 +712,13 @@ int MIDIEvent::MakeNextEvent(const unsigned char* pcData, int iMaxSize, int iTra
   (*pOutEvent)->m_iDT = iDT;
   (*pOutEvent)->m_iAbsT = iDT;
   if(pPrevEvent) (*pOutEvent)->m_iAbsT += pPrevEvent->m_iAbsT;
+
+  auto& key = midi_map[(*pOutEvent)->m_iAbsT];
+  key.second.push_back(*pOutEvent);
+
+  key.first = key.second.begin();
+  if(key.second.size() == 1)
+    midi_map_times.push_back((*pOutEvent)->m_iAbsT);
 
   return iTotal;
 }
@@ -926,7 +929,7 @@ void MIDIOutDevice::Close()
   midiOutClose(m_hMIDIOut);
   m_bIsOpen = false;*/
 
-  TerminateKDMAPIStream();
+  ResetKDMAPIStream();
 }
 
 // Specialized midi functions
@@ -984,14 +987,14 @@ bool MIDIOutDevice::PlayEventAcrossChannels(unsigned char cStatus, unsigned char
 
 bool MIDIOutDevice::PlayEvent(unsigned char cStatus, unsigned char cParam1, unsigned char cParam2)
 {
-  return SendDirectData((cParam2 << 16) + (cParam1 << 8) + cStatus);
+  return SendDirectData((cParam2 << 16) + (cParam1 << 8) + cStatus);;
 
   /*if(!m_bIsOpen) return false;
   return midiOutShortMsg(m_hMIDIOut, (cParam2 << 16) + (cParam1 << 8) + cStatus) == MMSYSERR_NOERROR;*/
 }
 
 void CALLBACK MIDIOutDevice::MIDIOutProc(HMIDIOUT hmo, UINT wMsg, DWORD_PTR dwInstance,
-  DWORD_PTR dwParam1, DWORD_PTR dwParam2)
+                                         DWORD_PTR dwParam1, DWORD_PTR dwParam2)
 {
   MIDIOutDevice* pOutDevice = reinterpret_cast<MIDIOutDevice*>(dwInstance);
 }

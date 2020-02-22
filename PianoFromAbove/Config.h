@@ -13,7 +13,7 @@
 #include <map>
 #include <string>
 
-#include "ProtoBuf\MetaData.pb.h"
+//#include "ProtoBuf\MetaData.pb.h"
 #include "tinyxml\tinyxml.h"
 
 #include "MIDI.h"

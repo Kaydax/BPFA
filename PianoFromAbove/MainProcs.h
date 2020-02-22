@@ -12,6 +12,7 @@
 #include <Windows.h>
 #include <CommCtrl.h>
 #include <string>
+#include <thread>
 using namespace std;
 
 // Message handlers for the main windows
