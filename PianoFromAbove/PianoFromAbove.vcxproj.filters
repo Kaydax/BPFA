@@ -147,6 +147,7 @@
     <None Include="G:\MIDI\intro.mid">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\vignette-transparent-2.png">

@@ -1,34 +1,32 @@
-﻿  FramePipe.cpp
+﻿  discord.cpp
+  FramePipe.cpp
   Config.cpp
   ConfigProcs.cpp
   GameState.cpp
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(994,23): warning C4477: 'swprintf_s' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'WPARAM'
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(994,23): message : consider using '%lld' in the format string
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(994,23): message : consider using '%Id' in the format string
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(994,23): message : consider using '%I64d' in the format string
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(1334,46): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2562,66): warning C4474: 'swprintf_s' : too many arguments passed for format string
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2562,66): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2564,67): warning C4474: 'swprintf_s' : too many arguments passed for format string
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2564,67): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2569,69): warning C4474: 'swprintf_s' : too many arguments passed for format string
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2569,69): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2571,70): warning C4474: 'swprintf_s' : too many arguments passed for format string
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2571,70): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2576,55): warning C4302: 'type cast': truncation from 'const char *' to 'wchar_t'
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2640,9): warning C4101: 'noteprintbuf': unreferenced local variable
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(551,63): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(1093,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(1529,35): warning C4244: '=': conversion from '__int64' to 'float', possible loss of data
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2007,68): warning C4474: 'swprintf_s' : too many arguments passed for format string
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2007,68): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2009,69): warning C4474: 'swprintf_s' : too many arguments passed for format string
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2009,69): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2014,71): warning C4474: 'swprintf_s' : too many arguments passed for format string
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2014,71): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2016,72): warning C4474: 'swprintf_s' : too many arguments passed for format string
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2016,72): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(2063,9): warning C4101: 'noteprintbuf': unreferenced local variable
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\utility(149,1): warning C4267: 'initializing': conversion from 'size_t' to '_Ty2', possible loss of data
           with
           [
               _Ty2=int
           ]
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(546): message : see reference to function template instantiation 'std::pair<__int64,int>::pair<__int64,unsigned __int64,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(543): message : see reference to function template instantiation 'std::pair<__int64,int>::pair<__int64,unsigned __int64,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
           with
           [
               _Other1=__int64,
               _Other2=unsigned __int64
           ]
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(546): message : see reference to function template instantiation 'std::pair<__int64,int>::pair<__int64,unsigned __int64,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(543): message : see reference to function template instantiation 'std::pair<__int64,int>::pair<__int64,unsigned __int64,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
           with
           [
               _Other1=__int64,
@@ -38,17 +36,9 @@ C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\GameState.cpp(5
   MIDI.cpp
   Misc.cpp
   PianoFromAbove.cpp
-  MetaData.pb.cc
-C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include\google\protobuf\io\coded_stream.h(902,23): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include\google\protobuf\io\coded_stream.h(1078,22): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include\google\protobuf\wire_format_lite_inl.h(663,76): warning C4267: 'argument': conversion from 'size_t' to 'google::protobuf::uint32', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include\google\protobuf\wire_format_lite_inl.h(670,76): warning C4267: 'argument': conversion from 'size_t' to 'google::protobuf::uint32', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include\google\protobuf\wire_format_lite_inl.h(738,58): warning C4267: 'argument': conversion from 'size_t' to 'google::protobuf::uint32', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include\google\protobuf\wire_format_lite_inl.h(739,22): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include\google\protobuf\wire_format_lite_inl.h(742,58): warning C4267: 'argument': conversion from 'size_t' to 'google::protobuf::uint32', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\protobuff\protobuf-2.5.0\vsprojects\include\google\protobuf\wire_format_lite_inl.h(743,22): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\ProtoBuf\MetaData.pb.cc(918,22): warning C4102: 'parse_tracks': unreferenced label
   Renderer.cpp
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\Renderer.cpp(355,34): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\Renderer.cpp(357,42): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
   tinystr.cpp
   tinyxml.cpp
   tinyxmlerror.cpp
@@ -56,7 +46,7 @@ C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\ProtoBuf\MetaDa
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
   Generating code
   Previous IPDB not found, fall back to full compilation.
-C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\Renderer.cpp(282): warning C4715: 'D3D9Renderer::DrawRect': not all control paths return a value
-  All 3279 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\PianoFromAbove\Renderer.cpp(283): warning C4715: 'D3D9Renderer::DrawRect': not all control paths return a value
+  All 2197 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
-  PianoFromAbove.vcxproj -> C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\\Debug\PFA-1.1.0-x86_64.exe
+  PianoFromAbove.vcxproj -> C:\Users\Kaydax\Documents\Stuff\Projects\C++\BPFA\\Debug\BPFA-PR3-Dev-x86_64.exe

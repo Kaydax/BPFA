@@ -9,6 +9,8 @@
 *************************************************************************************************/
 #include "Renderer.h"
 
+std::vector<SCREEN_VERTEX> batch_vertices;
+
 HRESULT Renderer::SetLimitFPS(bool bLimitFPS)
 {
 	if (bLimitFPS != m_bLimitFPS)
@@ -340,6 +342,24 @@ HRESULT D3D9Renderer::FlushBuffer()
 	HRESULT hr = m_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_iTriangle);
 	m_iTriangle = 0;
 	return hr;
+}
+
+HRESULT D3D9Renderer::RenderBatch()
+{
+  FlushBuffer();
+  const auto vertex_limit = (MaxTriangles - 1) * 3;
+  size_t vertices_left = batch_vertices.size();
+  for(unsigned i = 0; i < batch_vertices.size(); i += vertex_limit)
+  {
+    const size_t vertices_processed = min(vertices_left, vertex_limit);
+    PrepBuffer(vertices_processed);
+    memcpy(m_pVertexData, batch_vertices.data() + (batch_vertices.size() - vertices_left), vertices_processed * sizeof(SCREEN_VERTEX));
+    m_iTriangle += vertices_processed / 3;
+    vertices_left -= vertices_processed;
+    FlushBuffer();
+  }
+  batch_vertices.clear();
+  return S_OK;
 }
 
 HRESULT D3D9Renderer::BeginStaticBuffer(int iTriangles)
